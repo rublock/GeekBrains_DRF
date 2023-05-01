@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # custom apps
     'authors',
+    'mainapp',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,11 @@ STATIC_URL = '/static/'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+# api w/o web design
+#
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'rest_framework.renderers.JSONRenderer'
+#     ]
+# }
