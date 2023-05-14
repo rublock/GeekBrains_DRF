@@ -10,6 +10,7 @@ class Book(models.Model):
 
 class Article(models.Model):
     name = models.CharField(max_length=32)
+    text = models.TextField()
     author = models.ForeignKey(Author, models.PROTECT)
 
 # class Author(models.Model):
