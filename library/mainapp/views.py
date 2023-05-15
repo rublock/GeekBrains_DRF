@@ -1,9 +1,9 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, get_object_or_404
 
 
 
@@ -40,27 +40,39 @@ class ArticleAPIView(APIView):
 
 from rest_framework.views import APIView
 
+
 class ArticleCreateAPIView(CreateAPIView):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
-        
+
+       
 class ArticleListAPIView(ListAPIView):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
 
+
 class ArticleRetrieveAPIView(RetrieveAPIView):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
-	
+
+
 class ArticleDestroyAPIView(DestroyAPIView):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
-	
+
+
 class ArticleUpdateAPIView(UpdateAPIView):
 	queryset = Article.objects.all()
 	serializer_class = ArticleSerializer
 
-
-
-
-
+#если нужно построить свою логику
+class ArticleViewSet(ViewSet):
+	def list(self, request):
+		articles = Article.objects.all()
+		serializer = ArticleSerializer(articles, many=True)
+		return Response(serializer.data)
+	
+	def retrieve(self, request, pk=None):
+		article = get_object_or_404(Article, pk=pk)
+		serializer = ArticleSerializer(article)
+		return Response(serializer.data)

@@ -1,9 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 import mainapp.views as mainapp
 
+mainapp_router = DefaultRouter()
+mainapp_router.register('article', mainapp.ArticleViewSet, basename='article')
 
 urlpatterns = [
+    path('view/set/', include(mainapp_router.urls)),
     #path('article/list/api/view', mainapp.article_list),
     #тоже самое только Class based view
     path('article/list/api/view', mainapp.ArticleAPIView.as_view()),
