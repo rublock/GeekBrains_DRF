@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet, ViewSet
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, action
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, get_object_or_404
@@ -76,3 +76,9 @@ class ArticleViewSet(ViewSet):
 		article = get_object_or_404(Article, pk=pk)
 		serializer = ArticleSerializer(article)
 		return Response(serializer.data)
+	
+	#если нужно вывести только одно поле данных
+	@action(detail=True, methods=['get'])
+	def article_text_only(self, request, pk=None):
+		article = get_object_or_404(Article, pk=pk)
+		return  Response({'article.text': article.text})
