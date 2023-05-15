@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view, renderer_classes, action
 from rest_framework.renderers import JSONRenderer
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView, UpdateAPIView, get_object_or_404
+from rest_framework import viewsets
 
 
 
@@ -82,3 +83,23 @@ class ArticleViewSet(ViewSet):
 	def article_text_only(self, request, pk=None):
 		article = get_object_or_404(Article, pk=pk)
 		return  Response({'article.text': article.text})
+
+#если нужно отфильтровать по значению
+class ArticleQuerySetFilterViewSet(viewsets.ModelViewSet):
+	queryset = Article.objects.all()
+	serializer_class = ArticleSerializer
+
+	def get_queryset(self):
+		qs = super().get_queryset()
+		search_name = self.kwargs.get('name', '')
+		return qs.filter(name__contains=search_name)
+
+#если нужно отфильтровать из заначение в адресной строке
+class ArticleKwargsFilterViewSet(ListAPIView):
+	queryset = Article.objects.all()
+	serializer_class = ArticleSerializer
+
+	def get_queryset(self):
+		qs = super().get_queryset()
+		search_name = self.kwargs.get('name', '')
+		return qs.filter(name__contains=search_name)
