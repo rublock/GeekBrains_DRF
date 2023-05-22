@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react';
 import AuthorList from './component/Authors';
 import BookList from './component/Books';
+import AuthorBookList from './component/AuthorBooks';
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom'
 
 
@@ -38,6 +39,7 @@ class App extends React.Component {
           <Routes>
             <Route path='/' element={<AuthorList authors={this.state.authors}/>}/>
             <Route path='/books/' element={<BookList books={this.state.books}/>}/>
+            <Route path='/author/:id/' element={<AuthorBookList books={this.state.books}/>}/>
           </Routes>
         </BrowserRouter>
       </div>
