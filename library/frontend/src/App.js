@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
 import AuthorList from './component/Authors';
-import axios from 'axios';
 import BookList from './component/Books';
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 
 
 class App extends React.Component {
@@ -24,8 +24,12 @@ class App extends React.Component {
   render() {
     return (
       <div className={'App'}>
-        <AuthorList authors={this.state.authors}/>
-        <BookList books={this.state.books}/>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<AuthorList authors={this.state.authors}/>}/>
+            <Route path='/autr/' element={<BookList books={this.state.books}/>}/>
+          </Routes>
+        </BrowserRouter>
       </div>
     )
   }
