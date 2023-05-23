@@ -131,9 +131,15 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # api w/o web design
-#
 # REST_FRAMEWORK = {
 #     'DEFAULT_RENDERER_CLASSES': [
 #         'rest_framework.renderers.JSONRenderer'
 #     ]
 # }
+
+# autentification
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
+}
